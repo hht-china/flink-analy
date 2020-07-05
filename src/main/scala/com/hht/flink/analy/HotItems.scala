@@ -114,11 +114,13 @@ class TopNHotItems(topSize: Int) extends KeyedProcessFunction[Tuple, ItemViewCou
     val itemStateDesc = new ListStateDescriptor[ItemViewCount]("itemState", classOf[ItemViewCount])
     itemState = getRuntimeContext.getListState(itemStateDesc)
   }
-  //由于Watermark的进度是全局的，在processElement方法中，每当收到一条数据ItemViewCount，
-  //                 我们就注册一个windowEnd+1的定时器（Flink框架会自动忽略同一时间的重复注册）。
+  //由于Watermark的进度是全局的，在processElement方法中，
+  //             每当收到一条数据ItemViewCount都要itemState.add(itemViewCount)，
+  //             我们就注册一个windowEnd+1的定时器（Flink框架会自动忽略同一时间的重复注册）。
   // windowEnd+1的定时器被触发时，意味着收到了windowEnd+1的Watermark，
   //             即收齐了该windowEnd下的所有商品窗口统计值
   override def processElement(itemViewCount: ItemViewCount, context: KeyedProcessFunction[Tuple, ItemViewCount, String]#Context, collector: Collector[String]): Unit = {
+    itemState.add(itemViewCount)
     //注册定时器，触发时间定为windpowEnd + 1,触发说明window已经收集完成所有的数据
     context.timerService().registerEventTimeTimer(itemViewCount.windowEnd + 1)
   }
