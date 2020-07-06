@@ -31,7 +31,7 @@ object HotItems {
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
     env.setParallelism(1)
 
-    val dStream: DataStream[String] = env.readTextFile("C:\\Users\\Administrator\\Desktop\\flink-analy\\src\\main\\resources\\UserBehavior.csv")
+    val dStream: DataStream[String] = env.readTextFile("C:\\Users\\Administrator\\Desktop\\flink-analy\\HotItemsAnalysis\\src\\main\\resources\\UserBehavior.csv")
 
     val topNDStream: DataStream[String] = dStream.map(line => {
       val lineArr: Array[String] = line.split(",")
