@@ -44,7 +44,7 @@ object HotItems {
       //过滤出点击事件
       .filter(_.behavior == "pv")
       // keyBy("itemId")对商品进行分组
-      //flink用_.itmeId会出问题，这个习惯和spark不太一样
+      //flink用_.itmeId  aggregate会出问题，这个习惯和spark不太一样
       //   可以感觉到flink的也是偏向sql化的
       .keyBy("itemId")
       //使用.timeWindow(Time size, Time slide)对每个商品做滑动窗口（1小时窗口，5分钟滑动一次）
