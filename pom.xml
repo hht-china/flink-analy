@@ -12,6 +12,7 @@
         <module>HotItemsAnalysis</module>
         <module>NetworkTrafficAnalysis</module>
         <module>LoginFailDetect</module>
+        <module>OrderTimeoutDetect</module>
     </modules>
 
     <properties>
