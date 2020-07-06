@@ -17,7 +17,7 @@ import org.apache.flink.streaming.api.windowing.time.Time
 flink为我们提供了CEP（Complex Event Processing，复杂事件处理）库，
 用于在流中筛选符合某种复杂模式的事件。接下来我们就基于CEP来完成这个模块的实现
  */
-class LoginFailWithCEP {
+object LoginFailWithCEP {
   def main(args: Array[String]): Unit = {
     val env = StreamExecutionEnvironment.getExecutionEnvironment
     env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
